@@ -1,0 +1,8 @@
+O erro é liberar o nó antes de ajustar os ponteiros, causando ponteiros 
+inválidos. Primeiro deve-se reconectar a lista e só depois dar free no nó.
+
+Versão corrigida 
+atual->previous->next = atual->next;
+atual->next->previous = atual->previous;
+free(atual);
+list->size--;

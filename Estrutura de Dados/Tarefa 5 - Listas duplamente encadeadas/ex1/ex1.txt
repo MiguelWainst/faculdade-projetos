@@ -1,0 +1,9 @@
+Na lista simplesmente encadeada, para remover o último elemento a gente 
+precisa percorrer tudo desde o início porque não temos referência para o 
+nó anterior ao tail. 
+Já na lista duplamente encadeada, o ponteiro *previous permite acessar 
+diretamente o nó anterior ao tail, então não precisa percorrer a lista 
+toda.
+
+Com isso, a remoção do último elemento passa a ser O(1) pq é só ajustar
+os ponteiros do penúltimo nó e liberar o último.

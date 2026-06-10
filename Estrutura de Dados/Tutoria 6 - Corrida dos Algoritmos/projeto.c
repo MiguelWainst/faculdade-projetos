@@ -17,7 +17,7 @@ void bubbleSort(struct Chamado v[], int n) {
     int i, j;
     struct Chamado temp;
     
-    comparacoes = 0; // zera antes de começar
+    comparacoes = 0; // zera antes de comeÃ§ar
     trocas = 0;
 
     for (i = 0; i < n - 1; i++) {
@@ -85,9 +85,15 @@ void imprimir(struct Chamado v[], int n) {
     }
 }
 
+<<<<<<< HEAD
 // Cenário 1: Dados Aleatórios
 void gerarAleatorio(struct Chamado v[]) {
     int i; // Declarando o i aqui fora para não dar erro
+=======
+// CenÃ¡rio 1: Dados AleatÃ³rios
+void gerarAleatorio(struct Chamado v[]) {
+    int i; // Declarando o i aqui fora para nÃ£o dar erro
+>>>>>>> fd38c291c782cb0524b1d6187dd4aef10029daed
     struct Chamado dados[10] = {
         {105, "Prof Matheus", 3}, {102, "Maria", 5}, {108, "Ana", 1}, {101, "Beto", 2},
         {104, "Miguel", 4}, {107, "Duda", 3}, {103, "Erika", 5}, {110, "Lia", 2},
@@ -98,7 +104,11 @@ void gerarAleatorio(struct Chamado v[]) {
     }
 }
 
+<<<<<<< HEAD
 // Cenário 2: Já Ordenado
+=======
+// CenÃ¡rio 2: JÃ¡ Ordenado
+>>>>>>> fd38c291c782cb0524b1d6187dd4aef10029daed
 void gerarOrdenado(struct Chamado v[]) {
     int i; // Declarando o i aqui fora
     for (i = 0; i < 10; i++) {
@@ -108,7 +118,11 @@ void gerarOrdenado(struct Chamado v[]) {
     }
 }
 
+<<<<<<< HEAD
 // Cenário 3: Ordem Inversa
+=======
+// CenÃ¡rio 3: Ordem Inversa
+>>>>>>> fd38c291c782cb0524b1d6187dd4aef10029daed
 void gerarInverso(struct Chamado v[]) {
     int i; // Declarando o i aqui fora
     for (i = 0; i < 10; i++) {
@@ -122,8 +136,13 @@ int main() {
     struct Chamado lista[10];
     int n = 10;
 
+<<<<<<< HEAD
     // Aleatório
     printf("Teste 1: Aleatório\n");
+=======
+    // AleatÃ³rio
+    printf("Teste 1: AleatÃ³rio\n");
+>>>>>>> fd38c291c782cb0524b1d6187dd4aef10029daed
 
     gerarAleatorio(lista);
     bubbleSort(lista, n);
@@ -138,8 +157,13 @@ int main() {
     printf("Insertion Sort -> Comp: %d | Trocas: %d\n\n", comparacoes, trocas);
 
 
+<<<<<<< HEAD
     // já prdenado
     printf("Teste 2: já ordenado\n");
+=======
+    // jÃ¡ prdenado
+    printf("Teste 2: jÃ¡ ordenado\n");
+>>>>>>> fd38c291c782cb0524b1d6187dd4aef10029daed
 
     gerarOrdenado(lista);
     bubbleSort(lista, n);

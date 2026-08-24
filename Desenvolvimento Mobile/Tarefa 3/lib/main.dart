@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screens/login_screen.dart';
 import 'themes/app_theme.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class SupervisaoMaquinasApp extends StatelessWidget {
       title: 'Supervisão de Máquinas',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const Scaffold(body: Center(child: CircularProgressIndicator())),
+      home: const LoginScreen(),
     );
   }
 }

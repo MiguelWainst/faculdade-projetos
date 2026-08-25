@@ -1,0 +1,8 @@
+# Generated Flutter/Dart files.
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata
+build/
+

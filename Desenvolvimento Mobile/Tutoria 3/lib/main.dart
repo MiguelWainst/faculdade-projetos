@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'models/sensor_model.dart';
@@ -51,6 +53,17 @@ class ExerciciosScreen extends StatelessWidget {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute<void>(
                 builder: (context) => const DashboardGridScreen(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          _ExerciseTile(
+            number: 3,
+            title: 'O Guardião de Memória',
+            subtitle: 'Monitor térmico que libera o Timer no dispose().',
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (context) => const MonitorTermicoScreen(),
               ),
             ),
           ),
@@ -110,10 +123,7 @@ class ListaOtimizadaScreen extends StatelessWidget {
           return Card(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: ListTile(
-              leading: const Icon(
-                Icons.history_toggle_off,
-                color: Colors.red,
-              ),
+              leading: const Icon(Icons.history_toggle_off, color: Colors.red),
               title: Text('Registro de Máquina #$numeroRegistro'),
               subtitle: const Text('Status: Sincronizado na Memória'),
             ),
@@ -240,6 +250,84 @@ class SensorCard extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.w900,
                 color: Colors.blue,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MonitorTermicoScreen extends StatefulWidget {
+  const MonitorTermicoScreen({super.key});
+
+  @override
+  State<MonitorTermicoScreen> createState() => _MonitorTermicoScreenState();
+}
+
+class _MonitorTermicoScreenState extends State<MonitorTermicoScreen> {
+  Timer? _timerTelemetria;
+  double _temperaturaWEG = 45.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _timerTelemetria = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        _temperaturaWEG = 45.0 + (timer.tick % 5) * 0.4;
+      });
+      debugPrint(
+        '[SISTEMA ATIVO] Monitorando temperatura em tempo real: '
+        '$_temperaturaWEG °C',
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _timerTelemetria?.cancel();
+    debugPrint(
+      '[HIGIENE DE MEMÓRIA] Timer de telemetria destruído. Recursos liberados.',
+    );
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Monitor Térmico'),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.thermostat, size: 80, color: Colors.orange),
+            const SizedBox(height: 16),
+            const Text(
+              'Sensor Motor Principal (WEG)',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '${_temperaturaWEG.toStringAsFixed(1)} °C',
+              style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                'Abra o console e volte para a tela anterior. Os logs cessam '
+                'quando dispose() cancela o Timer, comprovando a liberação do recurso.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ],

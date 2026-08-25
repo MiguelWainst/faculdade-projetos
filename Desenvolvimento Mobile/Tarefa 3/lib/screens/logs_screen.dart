@@ -11,6 +11,7 @@ class LogsScreen extends StatefulWidget {
 }
 
 class _LogsScreenState extends State<LogsScreen> {
+  List<OcorrenciaModel> _todasOcorrencias = [];
   List<OcorrenciaModel> _ocorrencias = [];
   bool _carregando = true;
 
@@ -25,7 +26,8 @@ class _LogsScreenState extends State<LogsScreen> {
 
     if (!mounted) return;
     setState(() {
-      _ocorrencias = List.generate(50, _criarOcorrencia);
+      _todasOcorrencias = List.generate(50, _criarOcorrencia);
+      _ocorrencias = List.of(_todasOcorrencias);
       _carregando = false;
     });
   }
@@ -78,11 +80,40 @@ class _LogsScreenState extends State<LogsScreen> {
 
   void _alternarReconhecimento(int index) {
     final ocorrencia = _ocorrencias[index];
+    final atualizada = ocorrencia.copyWith(
+      reconhecida: !ocorrencia.reconhecida,
+    );
+
     setState(() {
-      _ocorrencias[index] = ocorrencia.copyWith(
-        reconhecida: !ocorrencia.reconhecida,
+      _ocorrencias[index] = atualizada;
+      final indiceOriginal = _todasOcorrencias.indexWhere(
+        (item) => item.id == ocorrencia.id,
       );
+      _todasOcorrencias[indiceOriginal] = atualizada;
     });
+  }
+
+  Future<void> _abrirFiltro() async {
+    final filtroSelecionado = await Navigator.push<Gravidade>(
+      context,
+      MaterialPageRoute(builder: (_) => const FilterScreen()),
+    );
+
+    if (!mounted || filtroSelecionado == null) return;
+
+    setState(() {
+      _ocorrencias = _todasOcorrencias
+          .where((ocorrencia) => ocorrencia.gravidade == filtroSelecionado)
+          .toList();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Exibindo apenas logs do tipo: ${_labelDaGravidade(filtroSelecionado)}',
+        ),
+      ),
+    );
   }
 
   @override
@@ -94,12 +125,7 @@ class _LogsScreenState extends State<LogsScreen> {
         title: const Text('Logs de Ocorrência'),
         actions: [
           TextButton.icon(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const FilterScreen()),
-              );
-            },
+            onPressed: _abrirFiltro,
             icon: const Icon(Icons.filter_alt_outlined),
             label: const Text('Filtrar'),
           ),

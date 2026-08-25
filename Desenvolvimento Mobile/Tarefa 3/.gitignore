@@ -1,8 +1,8 @@
 .dart_tool/
 .idea/
+*.iml
 .vscode/
 build/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
-pubspec.lock
